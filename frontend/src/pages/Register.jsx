@@ -9,7 +9,7 @@ function Register() {
       <div className="bg-white p-10 rounded-2xl shadow-xl w-[400px]">
 
         <h2 className="text-4xl font-bold mb-2">
-          Create Account 🚀
+          Create Account 
         </h2>
 
         <p className="text-gray-500 mb-8">

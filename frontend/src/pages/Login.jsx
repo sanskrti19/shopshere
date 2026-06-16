@@ -11,7 +11,7 @@ function Login() {
       <div className="bg-white p-10 rounded-2xl shadow-xl w-[400px]">
 
         <h2 className="text-4xl font-bold mb-2">
-          Welcome Back 👋
+          Welcome Back 
         </h2>
 
   
