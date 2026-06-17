@@ -17,4 +17,9 @@ public class AuthController {
     public User register(@RequestBody RegisterRequest request) {
         return authService.register(request);
     }
+
+    @PostMapping("/login")
+    public java.util.Map<String, Object> login(@RequestBody com.shopsphere.dto.LoginRequest request) {
+        return authService.login(request);
+    }
 }

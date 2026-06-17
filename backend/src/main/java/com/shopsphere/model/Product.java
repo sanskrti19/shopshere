@@ -7,28 +7,32 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
-@Document(collection = "users")
+@Document(collection = "products")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class Product {
 
     @Id
     private String id;
 
     private String name;
 
-    private String email;
+    private String description;
 
-    private String password;
+    private double price;
 
-    private Role role;
+    private String category;
 
-    private String phone;
+    private String brand;
 
-    private String address;
+    private int stock;
+
+    private String imageUrl;
+
+    private double rating;
 
     @CreatedDate
     private Date createdAt;
