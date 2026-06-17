@@ -13,22 +13,33 @@ function Navbar() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="flex items-center justify-between py-4">
           {/* Logo */}
-          <Link to="/" className="text-2xl font-bold tracking-tight text-black">
+          <Link to={isAuthenticated ? "/home" : "/"} className="text-2xl font-bold tracking-tight text-black">
             ShopSphere
           </Link>
 
           {/* Desktop Menu */}
           <div className="hidden items-center gap-8 lg:flex">
-            <Link to="/" className="font-medium text-gray-700 transition hover:text-black">
-              Home
-            </Link>
-            <Link to="/products" className="font-medium text-gray-700 transition hover:text-black">
-              Products
-            </Link>
-            {isAuthenticated && (
-              <Link to="/orders" className="font-medium text-gray-700 transition hover:text-black">
-                Orders
-              </Link>
+            {isAuthenticated ? (
+              <>
+                <Link to="/home" className="font-medium text-gray-700 transition hover:text-black">
+                  Home
+                </Link>
+                <Link to="/products" className="font-medium text-gray-700 transition hover:text-black">
+                  Products
+                </Link>
+                <Link to="/orders" className="font-medium text-gray-700 transition hover:text-black">
+                  Orders
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="/" className="font-medium text-gray-700 transition hover:text-black">
+                  Home
+                </Link>
+                <a href="#features" className="font-medium text-gray-700 transition hover:text-black">
+                  Features
+                </a>
+              </>
             )}
           </div>
 
@@ -98,16 +109,27 @@ function Navbar() {
         {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="border-t border-gray-200 pb-4 lg:hidden">
-            <Link to="/" className="block px-4 py-2 font-medium text-gray-700 transition hover:text-black">
-              Home
-            </Link>
-            <Link to="/products" className="block px-4 py-2 font-medium text-gray-700 transition hover:text-black">
-              Products
-            </Link>
-            {isAuthenticated && (
-              <Link to="/orders" className="block px-4 py-2 font-medium text-gray-700 transition hover:text-black">
-                Orders
-              </Link>
+            {isAuthenticated ? (
+              <>
+                <Link to="/home" className="block px-4 py-2 font-medium text-gray-700 transition hover:text-black">
+                  Home
+                </Link>
+                <Link to="/products" className="block px-4 py-2 font-medium text-gray-700 transition hover:text-black">
+                  Products
+                </Link>
+                <Link to="/orders" className="block px-4 py-2 font-medium text-gray-700 transition hover:text-black">
+                  Orders
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="/" className="block px-4 py-2 font-medium text-gray-700 transition hover:text-black">
+                  Home
+                </Link>
+                <a href="#features" className="block px-4 py-2 font-medium text-gray-700 transition hover:text-black">
+                  Features
+                </a>
+              </>
             )}
             <div className="border-t border-gray-200 px-4 py-4">
               {isAuthenticated ? (

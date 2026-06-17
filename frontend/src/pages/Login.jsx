@@ -20,7 +20,7 @@ function Login() {
       const response = await authService.login({ email, password });
       const token = response.data.token;
       login(token);
-      navigate("/", { replace: true });
+      navigate("/home", { replace: true });
     } catch (err) {
       setError(err.response?.data?.message || "Login failed. Please check your credentials.");
     }
