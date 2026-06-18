@@ -8,17 +8,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.security.core.Authentication;
+
 @RestController
 @RequestMapping("/api/cart")
-
 @RequiredArgsConstructor
-
 @CrossOrigin(origins = "http://localhost:5173")
 
 public class CartController {
 
     private final CartService cartService;
- 
+
+    // ADD TO CART
     @PostMapping("/add")
     public ResponseEntity<Cart> addToCart(
 
@@ -28,6 +29,8 @@ public class CartController {
 
             @RequestParam int quantity
     ) {
+
+        String userId = authentication.getName();
 
         return ResponseEntity.ok(
                 cartService.addToCart(
@@ -48,7 +51,8 @@ public class CartController {
                 cartService.getCart(userId)
         );
     }
- 
+
+    // REMOVE FROM CART
     @DeleteMapping("/remove")
     public ResponseEntity<Cart> removeFromCart(
 
@@ -56,6 +60,8 @@ public class CartController {
 
             @RequestParam String productId
     ) {
+
+        String userId = authentication.getName();
 
         return ResponseEntity.ok(
                 cartService.removeFromCart(
