@@ -2,11 +2,12 @@
 import { Link } from "react-router-dom";
 import { FaShoppingCart, FaUser, FaBars, FaTimes } from "react-icons/fa";
 import { useAuth } from "../../../context/AuthContext";
+import { useCart } from "../../../context/CartContext";
 
 function Navbar() {
   const { isAuthenticated, logout } = useAuth();
+  const { cartCount } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [cartCount, setCartCount] = useState(2); // Dummy cart count
 
   return (
     <nav className="sticky top-0 z-50 bg-white shadow-md">

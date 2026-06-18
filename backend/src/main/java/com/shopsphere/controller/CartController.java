@@ -22,7 +22,7 @@ public class CartController {
     @PostMapping("/add")
     public ResponseEntity<Cart> addToCart(
 
-            @RequestParam String userId,
+            Authentication authentication,
 
             @RequestParam String productId,
 
@@ -52,7 +52,7 @@ public class CartController {
     @DeleteMapping("/remove")
     public ResponseEntity<Cart> removeFromCart(
 
-            @RequestParam String userId,
+            Authentication authentication,
 
             @RequestParam String productId
     ) {

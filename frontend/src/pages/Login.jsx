@@ -19,7 +19,8 @@ function Login() {
     try {
       const response = await authService.login({ email, password });
       const token = response.data.token;
-      login(token);
+      const userId = response.data.user?.id || response.data.user?._id;
+      login(token, userId);
       navigate("/home", { replace: true });
     } catch (err) {
       setError(err.response?.data?.message || "Login failed. Please check your credentials.");

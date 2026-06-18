@@ -1,97 +1,42 @@
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import ProductCard from "./ProductCard";
-import { FaLaptop, FaMouse, FaHeadphones, FaGamepad, FaKeyboard } from "react-icons/fa";
-import { FaDesktop } from "react-icons/fa";
+import productService from "../utils/productService";
+
 function ProductGrid({ title }) {
-  const products = [
-    {
-      id: 1,
-      name: "Wireless Headphones",
-      price: 2999,
-      originalPrice: 4999,
-      category: "Electronics",
-      rating: 4.5,
-      reviews: 128,
-      discount: 40,
-      icon: <FaHeadphones />,
-    },
-    {
-      id: 2,
-      name: "Gaming Mouse",
-      price: 1499,
-      originalPrice: 2499,
-      category: "Gaming",
-      rating: 4.8,
-      reviews: 95,
-      discount: 40,
-      icon: <FaMouse />,
-    },
-    {
-      id: 3,
-      name: "Mechanical Keyboard",
-      price: 5999,
-      originalPrice: 8999,
-      category: "Gaming",
-      rating: 4.7,
-      reviews: 156,
-      discount: 33,
-      icon: <FaKeyboard />,
-    },
-    {
-      id: 4,
-      name: "4K Webcam",
-      price: 3499,
-      originalPrice: 5499,
-      category: "Electronics",
-      rating: 4.6,
-      reviews: 87,
-      discount: 36,
-      icon: <FaDesktop />,
-    },
-    {
-      id: 5,
-      name: "Laptop Stand",
-      price: 1999,
-      originalPrice: 3499,
-      category: "Accessories",
-      rating: 4.4,
-      reviews: 64,
-      discount: 43,
-      icon: <FaLaptop />,
-    },
-    {
-      id: 6,
-      name: "USB-C Hub",
-      price: 2499,
-      originalPrice: 4499,
-      category: "Accessories",
-      rating: 4.5,
-      reviews: 102,
-      discount: 44,
-      icon: <FaHeadphones />,
-    },
-    {
-      id: 7,
-      name: "Gaming Headset",
-      price: 3999,
-      originalPrice: 6999,
-      category: "Gaming",
-      rating: 4.9,
-      reviews: 201,
-      discount: 43,
-      icon: <FaHeadphones />,
-    },
-    {
-      id: 8,
-      name: "Portable SSD",
-      price: 4999,
-      originalPrice: 7999,
-      category: "Electronics",
-      rating: 4.6,
-      reviews: 143,
-      discount: 37,
-      icon: <FaLaptop />,
-    },
-  ];
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadProducts = async () => {
+      setLoading(true);
+      setError("");
+
+      try {
+        const response = await productService.getAllProducts();
+        if (isMounted) {
+          setProducts(response.data || []);
+        }
+      } catch (err) {
+        if (isMounted) {
+          setError("Unable to load products. Please try again later.");
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadProducts();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <section className="bg-white py-16">
@@ -103,16 +48,31 @@ function ProductGrid({ title }) {
           </div>
         )}
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <div key={index} className="h-96 rounded-2xl bg-gray-100 animate-pulse" />
+            ))}
+          </div>
+        ) : error ? (
+          <p className="text-center text-red-600">{error}</p>
+        ) : products.length === 0 ? (
+          <p className="text-center text-gray-600">No products available.</p>
+        ) : (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        )}
 
         <div className="mt-12 text-center">
-          <button className="inline-flex rounded-lg border border-black px-8 py-3 font-semibold text-black transition hover:bg-black hover:text-white">
+          <Link
+            to="/products"
+            className="inline-flex rounded-lg border border-black px-8 py-3 font-semibold text-black transition hover:bg-black hover:text-white"
+          >
             View All Products
-          </button>
+          </Link>
         </div>
       </div>
     </section>
